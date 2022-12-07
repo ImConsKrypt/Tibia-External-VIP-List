@@ -7,7 +7,7 @@ A simplistic external VIP list for the MMORPG "Tibia"
 
 **About**
 
-Add player names and the worlds that they reside on within the `./Data/Config.json` file you wish to track, this application will check TibiaData's RESTFul API every 5 seconds for matching names in either the Friend or Enemy categories within the local `Config.json` file and will show you Friends in GREEN and Enemies in RED along with their vocation and level.
+Add player names and the worlds that they reside on within the `./Data/Config.json` file you wish to track, this application will check TibiaData's RESTFul API every 10 seconds (By default, configurable in `Config.json`) for matching names in either the Friend or Enemy categories within the local `Config.json` file and will show you Friends in GREEN and Enemies in RED along with their vocation and level.
 
 **KNOWN "ISSUES"**
 

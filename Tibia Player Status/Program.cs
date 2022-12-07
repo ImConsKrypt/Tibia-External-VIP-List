@@ -1,90 +1,110 @@
 
 using System.Net;
+using TibiaExternalVIP;
 using TibiaData;
-using NameData;
 
 while (true)
 {
     Console.Clear();
-    List<string> names;
     Console.ForegroundColor = ConsoleColor.Gray;
-    //Currently statically locked to Solidera - Will add some configuration at a later date if requested otherwise just edit the line below to use the Server of Choise
-    string webURL = "https://api.tibiadata.com/v3/world/Solidera";
-    string nameList = "./Data/Names.json";
-
-    string jsonStrings = new WebClient().DownloadString(webURL).ToString();
-    string nameString = File.ReadAllText(nameList);
+    int uTime = 5000;
+    TibiConfig tConf;
     TData tData;
-    NData nData;
+    Console.WriteLine("Tibia External VIP List By ConsKrypt");
     try
     {
-        nameString = File.ReadAllText(nameList);
-        tData = TData.FromJson(jsonStrings);
-        nData = NData.FromJson(nameString);
-        int count = 0;
-        Console.WriteLine("Updating For World " + tData.Worlds.World.Name + "... " + DateTime.Now);
-
-        Console.Write("There Are Currently ");
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.Write(tData.Worlds.World.PlayersOnline);
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.Write(" Players Online!");
-        Console.WriteLine();
-
-        for (int i = 0; i < tData.Worlds.World.PlayersOnline; i++)
+        tConf = TibiConfig.FromJson(File.ReadAllText("./Data/Config.json"));
+        uTime = (int)tConf.Options.UpdateTime;
+        Console.Title = "Tibia External VIP List: Monitoring " + tConf.Worlds.Count() + " Servers.";
+        for (int iW = 0; iW < tConf.Worlds.Count(); iW++)
         {
-            for (int i2 = 0; i2 < nData.Enemies.Count(); i2++)
+            string curWorldJson = new WebClient().DownloadString("https://api.tibiadata.com/v3/world/" + tConf.Worlds[iW]);
+            tData = TData.FromJson(curWorldJson);
+            int count = 0;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("----------------------------------");
+            Console.Write("There are currently ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(tData.Worlds.World.PlayersOnline);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Players Online in ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(tData.Worlds.World.Name);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" [ ");
+
+            switch (tData.Worlds.World.PvpType.ToLower())
             {
-                if (tData.Worlds.World.OnlinePlayers[i].Name.ToLower() == nData.Enemies[i2].ToLower())
-                {
-                    count++;
-                    Console.WriteLine();
+                case "optional pvp":
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("Optional PVP");
+                    break;
+                default:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Name + " ");
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("[ ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Vocation);
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(" | ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Level);
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(" ]");
-                }
+                    Console.Write("PVP Enabled");
+                    break;
             }
-            for (int i3 = 0; i3 < nData.Friends.Count(); i3++)
-            {
-                if (tData.Worlds.World.OnlinePlayers[i].Name.ToLower() == nData.Friends[i3].ToLower())
-                {
-                    count++;
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Name + " ");
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("[ ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Vocation);
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(" | ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(tData.Worlds.World.OnlinePlayers[i].Level);
-                    Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(" ]");
-                }
-            }
-        }
-        if (count == 0)
-        {
-            count++;
-            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write(" ] ");
             Console.WriteLine();
-            Console.WriteLine("No Tracked Players Online!");
+            for (int i = 0; i < tData.Worlds.World.PlayersOnline; i++)
+            {
+                for (int i2 = 0; i2 < tConf.Players.Enemies.Count(); i2++)
+                {
+                    if (tData.Worlds.World.OnlinePlayers[i].Name.ToLower() == tConf.Players.Enemies[i2].ToLower())
+                    {
+                        count++;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Name + " ");
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write("[ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Vocation);
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" | ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Level);
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" ]");
+                        Console.WriteLine();
+                    }
+                }
+                for (int i3 = 0; i3 < tConf.Players.Friends.Count(); i3++)
+                {
+                    if (tData.Worlds.World.OnlinePlayers[i].Name.ToLower() == tConf.Players.Friends[i3].ToLower())
+                    {
+                        count++;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Name + " ");
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write("[ ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Vocation);
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" | ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(tData.Worlds.World.OnlinePlayers[i].Level);
+                        Console.ForegroundColor = Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" ]");
+                        Console.WriteLine();
+                    }
+                }
+            }
+            if (count == 0)
+            {
+                count++;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("No Tracked Players Online In " + tData.Worlds.World.Name +"!"); ;
+                Console.WriteLine();
+            }
         }
     } catch
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("ERROR PARSING JSON.... TRYING AGAIN IN 5 SECONDS!");
     }
-    Thread.Sleep(5000);
+    Thread.Sleep(uTime*1000);
 }

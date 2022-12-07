@@ -7,7 +7,7 @@ while (true)
 {
     Console.Clear();
     Console.ForegroundColor = ConsoleColor.Gray;
-    int uTime = 5000;
+    int uTime = 5;
     TibiConfig tConf;
     TData tData;
     Console.WriteLine("Tibia External VIP List By ConsKrypt");

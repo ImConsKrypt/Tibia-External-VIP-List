@@ -12,3 +12,6 @@ Add player names and the worlds that they reside on within the `./Data/Config.js
 **KNOWN "ISSUES"**
 
 Due to the nature of the RESTFul API, there is a slight delay to when people appear to show online/offline, unfortunately this is nothing that I can help as thats just how it is to reduce load on the services provided.
+
+**PLANNED UPDATES**
+- Adding Guild names to the players that are tracked (with option to disable this feature)

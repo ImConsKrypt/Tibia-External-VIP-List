@@ -1,0 +1,23 @@
+{
+  "Options": {
+    "ShowGuilds": true,
+    "ShowLevels": true,
+    "ShowVocations": true,
+    "UpdateTime": 10
+  },
+  "Worlds": [
+    "Solidera",
+    "Damora",
+    "Wintera"
+  ],
+  "Players": {
+    "Friends": [
+      "Example Name 1",
+      "Example Name 2"
+    ],
+    "Enemies": [
+      "Example Name 3",
+      "Example Name 4"
+    ]
+  }
+}

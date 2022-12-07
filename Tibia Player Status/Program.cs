@@ -104,7 +104,7 @@ while (true)
     } catch
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("ERROR PARSING JSON.... TRYING AGAIN IN 5 SECONDS!");
+        Console.WriteLine("ERROR PARSING JSON.... TRYING AGAIN IN " + uTime + " SECONDS!");
     }
     Thread.Sleep(uTime*1000);
 }

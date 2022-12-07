@@ -78,7 +78,7 @@ namespace TibiaData
         public bool BattleyeProtected { get; set; }
 
         [JsonProperty("battleye_date")]
-        public DateTimeOffset BattleyeDate { get; set; }
+        public string BattleyeDate { get; set; }
 
         [JsonProperty("game_world_type")]
         public string GameWorldType { get; set; }

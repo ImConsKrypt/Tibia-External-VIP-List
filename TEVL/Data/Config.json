@@ -1,0 +1,28 @@
+{
+    "Options": {
+      "ShowLevel": true,
+      "ShowVocation": true,
+      "ShowGuild": true,
+      "UpdateTime": 20,
+      "UpdateCheck": true
+    },
+    "Players": {
+      "Friends": [
+        "ExampleFriendName",
+        "ExampleFriendName2"
+      ],
+      "Foes": [
+        "ExampleFoeName",
+        "ExampleFoeName2"
+      ],
+      "Guild": [
+        "ExampleGuildMemberName",
+        "ExampleGuildMemberName2"
+      ]
+    },
+    "Worlds": [
+        "ExampleWorld",
+        "ExampleWorld2",
+        "ExampleWorld3"
+    ]
+  }

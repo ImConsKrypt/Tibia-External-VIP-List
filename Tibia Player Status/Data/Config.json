@@ -1,23 +1,27 @@
 {
   "Options": {
-    "ShowGuilds": true,
-    "ShowLevels": true,
-    "ShowVocations": true,
-    "UpdateTime": 10
+    "ShowLevel": true,
+    "ShowVocation": true,
+    "ShowGuild": true,
+    "UpdateTime": 30,
+    "UpdateCheck": false
   },
-  "Worlds": [
-    "Solidera",
-    "Damora",
-    "Wintera"
-  ],
   "Players": {
     "Friends": [
-      "Example Name 1",
-      "Example Name 2"
+      "ExampleName1",
+      "ExampleName2"
     ],
-    "Enemies": [
-      "Example Name 3",
-      "Example Name 4"
+    "Foes": [
+      "ExampleName3",
+      "ExampleName4"
+    ],
+    "Guild": [
+      "ExampleName5",
+      "ExampleName6"
     ]
-  }
+  },
+  "Worlds": [
+    "ExampleWorld1",
+    "ExampleWorld2"
+  ]
 }

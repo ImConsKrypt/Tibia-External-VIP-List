@@ -1,4 +1,4 @@
-# Tibia-Player-Status
+# Tibia External VIP List
 A simplistic external VIP list for the MMORPG "Tibia"
 
 **REQUIREMENTS**

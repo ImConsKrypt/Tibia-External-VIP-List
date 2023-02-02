@@ -215,13 +215,6 @@ void DoInit()
             Console.Write(" ]");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            /*Console.Write("Player Name");
-            if (conf.Options.ShowLevel.HasValue && conf.Options.ShowLevel.Value == true)
-                Console.Write(" \t[Level]");
-            if (conf.Options.ShowVocation.HasValue && conf.Options.ShowVocation.Value == true)
-                Console.Write("\t[Vocation]");
-            if (conf.Options.ShowGuild.HasValue && conf.Options.ShowGuild.Value == true)
-                Console.Write("\t \t[Guild]");*/
             string lvl = "";
             string gld = "";
             string voc = "";
@@ -294,9 +287,6 @@ void DoInit()
                 }
             }
 
-
-
-            //Console.WriteLine(wData.Worlds.World.Name + " " + wData.Worlds.World.Location);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=[ TEVL " + curVersion + " ]=-");
@@ -328,7 +318,6 @@ void DoInit()
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=[ TEVL "+ curVersion +" ]=-");
         Console.ForegroundColor = ConsoleColor.Red;
-        //Console.WriteLine(ex.Message);
         Console.WriteLine("There was an issue with the data retrieved from TibiaData.com...");
         Console.Write("Trying again in ");
         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -344,16 +333,17 @@ void CheckForUpdates()
     if(conf.Options.UpdateCheck.HasValue && conf.Options.UpdateCheck == true)
     {
 
-        string url = "https://gist.githubusercontent.com/ImConsKrypt/76b5ebdf7c454acfc397ffea69347c86/raw/36593b6683318ee27fa69c394825fc0968ee90f3/TEVLUpdate.json";
+        string url = "https://gist.githubusercontent.com/ImConsKrypt/76b5ebdf7c454acfc397ffea69347c86/raw/51f6436bd0378265e9362a9f419183a5a036ed51/TEVLUpdate.json";
         HttpClient updateCheck = new HttpClient();
         updateCheck.BaseAddress = new Uri(url);
         Task<string> uJson = updateCheck.GetStringAsync(url);
         uJson.Wait(300);
         updateData = UpdateData.FromJson(uJson.Result);
-        if("v"+updateData.CurrentVersion.ToString() != curVersion.ToString())
+
+        if(curVersion != updateData.CurrentVersion)
         {
             Console.ForegroundColor= ConsoleColor.Yellow;
-            Console.WriteLine("There is a newer version available, Current Version: " + curVersion + ". Available Update Version: " + updateData.CurrentVersion.ToString());
+            Console.WriteLine("There is a newer version available, Current Version: " + curVersion + ". Available Update Version: " + updateData.CurrentVersion);
         }
     }
 }
